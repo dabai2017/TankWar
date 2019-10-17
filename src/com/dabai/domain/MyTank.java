@@ -80,7 +80,6 @@ public class MyTank extends Element {
 		case UP:
 			this.imgPath = "res\\img\\tank_u.gif";
 			break;
-
 		case DOWN:
 			this.imgPath = "res\\img\\tank_d.gif";
 			break;
