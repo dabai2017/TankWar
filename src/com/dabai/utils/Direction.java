@@ -7,5 +7,5 @@ package com.dabai.utils;
  */
 
 public enum Direction {
-	UP,DOWN,LEFT,RIGHT
+	UP,DOWN,LEFT,RIGHT,RESET
 }

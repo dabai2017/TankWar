@@ -72,15 +72,15 @@ public class GameWindow extends Window {
 
 		// 上下左右事件
 		if (key == Keyboard.KEY_UP) {
-
+			myTank.move(Direction.UP);
 		} else if (key == Keyboard.KEY_DOWN) {
-
+			myTank.move(Direction.DOWN);
 		} else if (key == Keyboard.KEY_LEFT) {
-
+			myTank.move(Direction.LEFT);
 		} else if (key == Keyboard.KEY_RIGHT) {
-
-		} else if (key == Keyboard.KEY_RETURN) {
-
+			myTank.move(Direction.RIGHT);
+		} else if (key == Keyboard.KEY_F5) {
+			myTank.move(Direction.RESET);
 		}
 
 	}
@@ -90,7 +90,7 @@ public class GameWindow extends Window {
 		// 刷新帧
 
 		// 遍历土墙集合 将一组
-		Iterator it = mElementList.iterator();
+		Iterator<Element> it = mElementList.iterator();
 		while (it.hasNext()) {
 			Element ele = (Element) it.next();
 			ele.draw();
