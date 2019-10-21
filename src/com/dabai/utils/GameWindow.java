@@ -25,12 +25,9 @@ public class GameWindow extends Window {
 	@Override
 	protected void onCreate() {
 
-		try {
-			// SoundUtils.play("res\\snd\\start.wav");
-		} catch (Exception e) {
-			// TODO: handle exception
-			e.printStackTrace();
-		}
+		playSound("res\\snd\\start.wav");
+		
+	
 		// 窗体宽度/px = 一个窗体可以摆放几块
 		// 土墙
 		for (int i = 0; i < Config.WIDTH / Config.PX - 1; i++) {
@@ -81,10 +78,16 @@ public class GameWindow extends Window {
 			myTank.move(Direction.RIGHT);
 		} else if (key == Keyboard.KEY_F5) {
 			myTank.move(Direction.RESET);
+		}else if (key == Keyboard.KEY_RETURN) {
+			Bullet bullet = myTank.shot();//开炮
+			mElementList.add(bullet);
+			
+		
 		}
 
 	}
 
+	
 	@Override
 	protected void onDisplayUpdate() {
 		// 刷新帧

@@ -15,6 +15,8 @@ public class MyTank extends Element {
 		super(imgPath, x, y);
 		// TODO Auto-generated constructor stub
 	}
+	
+
 
 	public void move(Direction direction) {
 		
@@ -93,6 +95,11 @@ public class MyTank extends Element {
 			break;
 		}
 		super.draw();
+	}
+	
+	
+	public Bullet shot() {
+		return new Bullet(this);
 	}
 
 }
