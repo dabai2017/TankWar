@@ -102,4 +102,18 @@ public class MyTank extends Element {
 		return new Bullet(this);
 	}
 
+
+
+	public int getPower() {
+		return power;
+	}
+
+
+
+	public Direction getDirection() {
+		return direction;
+	}
+	
+
+
 }

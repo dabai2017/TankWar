@@ -81,8 +81,6 @@ public class GameWindow extends Window {
 		}else if (key == Keyboard.KEY_RETURN) {
 			Bullet bullet = myTank.shot();//开炮
 			mElementList.add(bullet);
-			
-		
 		}
 
 	}
