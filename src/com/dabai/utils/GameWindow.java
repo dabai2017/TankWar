@@ -68,13 +68,13 @@ public class GameWindow extends Window {
 	protected void onKeyEvent(int key) {
 
 		// 上下左右事件
-		if (key == Keyboard.KEY_UP) {
+		if (key == Keyboard.KEY_W) {
 			myTank.move(Direction.UP);
-		} else if (key == Keyboard.KEY_DOWN) {
+		} else if (key == Keyboard.KEY_S) {
 			myTank.move(Direction.DOWN);
-		} else if (key == Keyboard.KEY_LEFT) {
+		} else if (key == Keyboard.KEY_A) {
 			myTank.move(Direction.LEFT);
-		} else if (key == Keyboard.KEY_RIGHT) {
+		} else if (key == Keyboard.KEY_D) {
 			myTank.move(Direction.RIGHT);
 		} else if (key == Keyboard.KEY_F5) {
 			myTank.move(Direction.RESET);
