@@ -1,5 +1,6 @@
 package com.dabai.game;
 
+
 import com.dabai.utils.GameWindow;
 
 public class TankApp {
@@ -11,7 +12,7 @@ public class TankApp {
 		GameWindow gw = new GameWindow(Config.TITLE, Config.WIDTH, Config.HEIGHT, Config.FPS);
 		gw.start();
 		
-		
+	
 		
 		
 	}

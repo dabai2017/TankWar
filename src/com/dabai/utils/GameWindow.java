@@ -19,13 +19,16 @@ public class GameWindow extends Window {
 	private MyTank myTank;
 
 	public GameWindow(String title, int width, int height, int fps) {
+		
 		super(title, width, height, fps);
-
+		System.out.println("游戏窗体加载完毕...");
+		
 	}
 
 	@Override
 	protected void onCreate() {
 
+		System.out.println("载入游戏欢迎音乐...");
 		playSound("res\\snd\\start.wav");
 		
 	
@@ -58,11 +61,11 @@ public class GameWindow extends Window {
 		myTank = new MyTank("res\\img\\tank_u.gif", Config.WIDTH / 2
 				- Config.PX / 2, Config.HEIGHT - Config.PX);
 		
-/*		
+	
 		System.out.println("辅助工具加载...");
 		Tips tips = new Tips();
 		tips.loadwin();
-*/
+
 	}
 
 	@Override
