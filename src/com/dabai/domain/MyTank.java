@@ -6,11 +6,12 @@ import com.dabai.utils.Direction;
 public class MyTank extends Element {
 
 	private int blood;
-	private int speed = 32;
+	private int speed = 16;
 	private int power;
-
 	private Direction direction = Direction.UP;
 
+	private long lastFire = 0l;
+	
 	public MyTank(String imgPath, int x, int y) {
 		super(imgPath, x, y);
 		// TODO Auto-generated constructor stub
@@ -99,6 +100,13 @@ public class MyTank extends Element {
 	
 	
 	public Bullet shot() {
+		
+		long nowTime = System.currentTimeMillis();//获得当前时间戳
+		
+		if ((nowTime - lastFire) < 500) {
+			return null;
+		}
+		lastFire = nowTime;
 		return new Bullet(this);
 	}
 
@@ -107,7 +115,6 @@ public class MyTank extends Element {
 	public int getPower() {
 		return power;
 	}
-
 
 
 	public Direction getDirection() {

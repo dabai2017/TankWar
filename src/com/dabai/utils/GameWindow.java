@@ -9,6 +9,7 @@ import org.lwjgl.input.Keyboard;
 
 import com.dabai.domain.*;
 import com.dabai.game.Config;
+import com.dabai.window.utils.Tips;
 
 public class GameWindow extends Window {
 
@@ -56,7 +57,12 @@ public class GameWindow extends Window {
 
 		myTank = new MyTank("res\\img\\tank_u.gif", Config.WIDTH / 2
 				- Config.PX / 2, Config.HEIGHT - Config.PX);
-
+		
+/*		
+		System.out.println("辅助工具加载...");
+		Tips tips = new Tips();
+		tips.loadwin();
+*/
 	}
 
 	@Override
@@ -80,7 +86,9 @@ public class GameWindow extends Window {
 			myTank.move(Direction.RESET);
 		}else if (key == Keyboard.KEY_RETURN) {
 			Bullet bullet = myTank.shot();//开炮
-			mElementList.add(bullet);
+			if (bullet != null) {
+				mElementList.add(bullet);
+			}
 		}
 
 	}
@@ -90,14 +98,20 @@ public class GameWindow extends Window {
 	protected void onDisplayUpdate() {
 		// 刷新帧
 
-		// 遍历土墙集合 将一组
-		Iterator<Element> it = mElementList.iterator();
-		while (it.hasNext()) {
-			Element ele = (Element) it.next();
-			ele.draw();
-		}
+		try {
+			
+			Iterator<Element> it = mElementList.iterator();
+			while (it.hasNext()) {
+				Element ele = (Element) it.next();
+				ele.draw();
+			}
 
-		myTank.draw();
+			myTank.draw();
+			
+	
+		} catch (Exception e) {
+			System.out.println("有异常情况 ： "+e.getMessage());
+		}
 
 	}
 
