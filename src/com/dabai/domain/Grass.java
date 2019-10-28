@@ -15,4 +15,10 @@ public class Grass extends Element{
 	}
 	//公有的普通方法
 
+	@Override
+	public int getOrder() {
+		// TODO Auto-generated method stub
+		return 1;
+	}
+
 }

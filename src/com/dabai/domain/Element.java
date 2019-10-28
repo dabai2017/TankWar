@@ -72,5 +72,10 @@ public class Element{
 			e.printStackTrace();
 		}
 	}
+	
+	
+	public int getOrder() {
+		return 0;
+	}
 
 }

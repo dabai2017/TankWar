@@ -2,19 +2,20 @@ package com.dabai.utils;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
+
 
 import org.lwjgl.input.Keyboard;
 
 import com.dabai.domain.*;
 import com.dabai.game.Config;
-import com.dabai.window.utils.Tips;
 
 public class GameWindow extends Window {
 
 	// 新建一组砖墙对象
-	private ArrayList<Element> mElementList = new ArrayList<>();
+	public List<Element> mElementList = new ArrayList<Element>();
 
 	private MyTank myTank;
 
@@ -28,8 +29,8 @@ public class GameWindow extends Window {
 	@Override
 	protected void onCreate() {
 
-		System.out.println("载入游戏欢迎音乐...");
-		playSound("res\\snd\\start.wav");
+		//System.out.println("载入游戏欢迎音乐...");
+		//playSound("res\\snd\\start.wav");
 		
 	
 		// 窗体宽度/px = 一个窗体可以摆放几块
@@ -37,35 +38,31 @@ public class GameWindow extends Window {
 		for (int i = 0; i < Config.WIDTH / Config.PX - 1; i++) {
 			// 图片位子 x轴 y轴
 			Wall wall = new Wall("res\\img\\wall.gif", i * Config.PX, Config.PX);
-			mElementList.add(wall);
+			this.addElement(wall);
 		}
 		// 水墙
 		for (int i = 1; i < Config.WIDTH / Config.PX; i++) {
 			Water water = new Water("res\\img\\water.gif", i * Config.PX,
 					Config.PX * 3);
-			mElementList.add(water);
+			this.addElement(water);
 		}
 		// 铁墙
 		for (int i = 0; i < Config.WIDTH / Config.PX - 1; i++) {
 			Steel steel = new Steel("res\\img\\steel.gif", i * Config.PX,
 					Config.PX * 5);
-			mElementList.add(steel);
+			this.addElement(steel);
 		}
 		// 草墙
 		for (int i = 1; i < Config.WIDTH / Config.PX; i++) {
 			Grass grass = new Grass("res\\img\\grass.gif", i * Config.PX,
 					Config.PX * 7);
-			mElementList.add(grass);
+			this.addElement(grass);
 		}
 
 		myTank = new MyTank("res\\img\\tank_u.gif", Config.WIDTH / 2
 				- Config.PX / 2, Config.HEIGHT - Config.PX);
-		
+		this.addElement(myTank);
 	
-		System.out.println("辅助工具加载...");
-		Tips tips = new Tips();
-		tips.loadwin();
-
 	}
 
 	@Override
@@ -77,20 +74,20 @@ public class GameWindow extends Window {
 	protected void onKeyEvent(int key) {
 
 		// 上下左右事件
-		if (key == Keyboard.KEY_W) {
+		if (key == Keyboard.KEY_W || key == Keyboard.KEY_UP) {
 			myTank.move(Direction.UP);
-		} else if (key == Keyboard.KEY_S) {
+		} else if (key == Keyboard.KEY_S || key == Keyboard.KEY_DOWN) {
 			myTank.move(Direction.DOWN);
-		} else if (key == Keyboard.KEY_A) {
+		} else if (key == Keyboard.KEY_A || key == Keyboard.KEY_LEFT) {
 			myTank.move(Direction.LEFT);
-		} else if (key == Keyboard.KEY_D) {
+		} else if (key == Keyboard.KEY_D || key == Keyboard.KEY_RIGHT) {
 			myTank.move(Direction.RIGHT);
 		} else if (key == Keyboard.KEY_F5) {
 			myTank.move(Direction.RESET);
 		}else if (key == Keyboard.KEY_RETURN) {
 			Bullet bullet = myTank.shot();//开炮
 			if (bullet != null) {
-				mElementList.add(bullet);
+				this.addElement(bullet);
 			}
 		}
 
@@ -109,15 +106,14 @@ public class GameWindow extends Window {
 				ele.draw();
 			}
 
-			myTank.draw();
 			
-	
 		} catch (Exception e) {
 			System.out.println("有异常情况 ： "+e.getMessage());
 		}
 
 	}
 
+	
 	public static void playSound(String res) {
 		try {
 			SoundUtils.play(res);
@@ -133,5 +129,21 @@ public class GameWindow extends Window {
 			System.out.println("出了问题:" + e.getMessage());
 		}
 	}
+	
+	
+	
+	private void addElement(Element element) {
+		this.mElementList.add(element);
+		this.mElementList.sort(new Comparator<Element>() {
+
+			@Override
+			public int compare(Element o1, Element o2) {
+				// TODO Auto-generated method stub
+				return o1.getOrder() - o2.getOrder();
+			}
+		});
+	}
+	
+	
 
 }
