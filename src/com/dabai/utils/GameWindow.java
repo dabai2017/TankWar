@@ -6,11 +6,11 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
-
 import org.lwjgl.input.Keyboard;
 
 import com.dabai.domain.*;
 import com.dabai.game.Config;
+import com.dabai.game.TankApp;
 
 public class GameWindow extends Window {
 
@@ -20,37 +20,64 @@ public class GameWindow extends Window {
 	private MyTank myTank;
 
 	public GameWindow(String title, int width, int height, int fps) {
-		
+
 		super(title, width, height, fps);
 		System.out.println("游戏窗体加载完毕...");
-		
+
 	}
 
 	@Override
 	protected void onCreate() {
 
-		//System.out.println("载入游戏欢迎音乐...");
-		//playSound("res\\snd\\start.wav");
-		
-	
+		// System.out.println("载入游戏欢迎音乐...");
+		// playSound("res\\snd\\start.wav");
+
 		// 窗体宽度/px = 一个窗体可以摆放几块
 		// 土墙
 		for (int i = 0; i < Config.WIDTH / Config.PX - 1; i++) {
+
+			// 改变一些砖墙对象
+			Steel steel = new Steel("res\\img\\steel.gif", i * Config.PX,
+					Config.PX);
+
+			if (i > 4 && i < 14) {
+				this.addElement(steel);
+				continue;
+			}
 			// 图片位子 x轴 y轴
 			Wall wall = new Wall("res\\img\\wall.gif", i * Config.PX, Config.PX);
 			this.addElement(wall);
 		}
 		// 水墙
 		for (int i = 1; i < Config.WIDTH / Config.PX; i++) {
+
+			// 改变一些砖墙对象
+			Water water2 = new Water("res\\img\\water.gif", i * Config.PX,
+					Config.PX * 4);
+			if (i > 7 && i < 15) {
+				// this.addElement(water2);
+				continue;
+			}
+
 			Water water = new Water("res\\img\\water.gif", i * Config.PX,
 					Config.PX * 3);
 			this.addElement(water);
 		}
 		// 铁墙
 		for (int i = 0; i < Config.WIDTH / Config.PX - 1; i++) {
+
+			// 改变一些砖墙对象
+			Grass grass = new Grass("res\\img\\grass.gif", i * Config.PX,
+					Config.PX * 5);
+			if (i > 6 && i < 14) {
+				this.addElement(grass);
+				continue;
+			}
+
 			Steel steel = new Steel("res\\img\\steel.gif", i * Config.PX,
 					Config.PX * 5);
 			this.addElement(steel);
+
 		}
 		// 草墙
 		for (int i = 1; i < Config.WIDTH / Config.PX; i++) {
@@ -59,10 +86,10 @@ public class GameWindow extends Window {
 			this.addElement(grass);
 		}
 
-		myTank = new MyTank("res\\img\\tank_u.gif", Config.WIDTH / 2
+		myTank = new MyTank("res\\img\\tank2_u.gif", Config.WIDTH / 2
 				- Config.PX / 2, Config.HEIGHT - Config.PX);
 		this.addElement(myTank);
-	
+
 	}
 
 	@Override
@@ -84,8 +111,8 @@ public class GameWindow extends Window {
 			myTank.move(Direction.RIGHT);
 		} else if (key == Keyboard.KEY_F5) {
 			myTank.move(Direction.RESET);
-		}else if (key == Keyboard.KEY_RETURN) {
-			Bullet bullet = myTank.shot();//开炮
+		} else if (key == Keyboard.KEY_RETURN) {
+			Bullet bullet = myTank.shot();// 开炮
 			if (bullet != null) {
 				this.addElement(bullet);
 			}
@@ -93,27 +120,44 @@ public class GameWindow extends Window {
 
 	}
 
-	
 	@Override
 	protected void onDisplayUpdate() {
+		System.out.println("冯海辰???????????????????????????");
+		
 		// 刷新帧
 
 		try {
-			
+
 			Iterator<Element> it = mElementList.iterator();
 			while (it.hasNext()) {
 				Element ele = (Element) it.next();
+
+				// 判断当前元素是否为
+				if (ele instanceof MyTank) {
+					MyTank tank = (MyTank) ele;
+					Iterator<Element> it2 = mElementList.iterator();
+					while (it2.hasNext()) {
+						Element element2 = (Element) it2.next();
+
+						if (element2 instanceof Steel || element2 instanceof Water) {
+							// 如果元素属于 不可通过元素
+							boolean bool = tank.checkCollsion(element2);
+							if (bool) {
+								break;// 如果发生碰撞就终止循环
+							}
+						}
+					}
+				}
+
 				ele.draw();
 			}
 
-			
 		} catch (Exception e) {
-			System.out.println("有异常情况 ： "+e.getMessage());
+			System.out.println("有异常情况 ： " + e.getMessage());
 		}
 
 	}
 
-	
 	public static void playSound(String res) {
 		try {
 			SoundUtils.play(res);
@@ -129,9 +173,7 @@ public class GameWindow extends Window {
 			System.out.println("出了问题:" + e.getMessage());
 		}
 	}
-	
-	
-	
+
 	private void addElement(Element element) {
 		this.mElementList.add(element);
 		this.mElementList.sort(new Comparator<Element>() {
@@ -143,7 +185,5 @@ public class GameWindow extends Window {
 			}
 		});
 	}
-	
-	
 
 }

@@ -1,6 +1,7 @@
 package com.dabai.domain;
 
 import com.dabai.game.Config;
+import com.dabai.utils.CollsionUtils;
 import com.dabai.utils.Direction;
 
 public class MyTank extends Element {
@@ -25,6 +26,12 @@ public class MyTank extends Element {
 			this.direction = direction;
 			return;
 		}
+		
+		//如果当前移动方向是不可移动方向，，则直接退出
+		if (direction.equals(unmoveDirection)) {
+			return;
+		}
+		
 		
 		this.direction = direction;
 
@@ -110,6 +117,43 @@ public class MyTank extends Element {
 		return new Bullet(this);
 	}
 
+	
+	private Direction unmoveDirection;//不可移动的方向
+	public boolean checkCollsion(Element element) {
+		int x1 = element.x;
+		int y1 = element.y;
+		int w1 = element.width;
+		int h1 = element.height;
+		
+		int x2 = this.x;
+		int y2 = this.y;
+		
+		switch (direction) {
+		case UP:
+			y2 -= this.speed;
+			break;
+		case DOWN:
+			y2 += this.speed;
+			break;
+		case LEFT:
+			x2 -= this.speed;
+			break;
+		case RIGHT: 
+			x2 += this.speed;
+			break;
+
+		default:
+			break;
+		}
+		
+		boolean bool = CollsionUtils.isCollsionWithRect(x1, y1, w1, h1, x2, y2, width, height);
+		if (bool) {
+			this.unmoveDirection = direction;
+		}else {
+			this.unmoveDirection = null;
+		}
+		return bool;
+	}
 
 
 	public int getPower() {
