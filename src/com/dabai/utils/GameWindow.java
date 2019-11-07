@@ -1,5 +1,8 @@
 package com.dabai.utils;
 
+import java.awt.AWTException;
+import java.awt.Robot;
+import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -27,6 +30,17 @@ public class GameWindow extends Window {
 
 		super(title, width, height, fps);
 		System.out.println("游戏窗体加载完毕...");
+		
+		/**
+		 * 切换输入法为 英文
+		 */
+
+		try {
+			Runtime.getRuntime().exec("cmd /c CScript D:\\java\\TankWar-V1.0\\res\\shift.vbs");
+		} catch (IOException e) {
+		}
+			
+		
 
 	}
 
@@ -99,7 +113,11 @@ public class GameWindow extends Window {
 		myTank2 = new MyTank("res\\img\\tank2_u.gif", Config.WIDTH / 2
 				- Config.PX / 2 + 80, Config.HEIGHT - Config.PX);
 		
-		//myTank.setSpeed(16);
+		
+		myTank2.setBullettime(10);
+		myTank2.skin(1);
+	
+		
 		this.addElement(myTank);
 		this.addElement(myTank2);
 
