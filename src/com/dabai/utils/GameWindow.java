@@ -3,11 +3,13 @@ package com.dabai.utils;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Comparator;
+
 import java.util.Iterator;
 import java.util.List;
 
 import org.lwjgl.input.Keyboard;
 
+import com.dabai.domain.interfaces.*;
 import com.dabai.domain.*;
 import com.dabai.game.Config;
 import com.dabai.game.TankApp;
@@ -18,7 +20,9 @@ public class GameWindow extends Window {
 	public List<Element> mElementList = new ArrayList<Element>();
 
 	private MyTank myTank;
-
+	private MyTank myTank2;
+	
+	
 	public GameWindow(String title, int width, int height, int fps) {
 
 		super(title, width, height, fps);
@@ -86,9 +90,18 @@ public class GameWindow extends Window {
 			this.addElement(grass);
 		}
 
+		
+		//坦克 1号
 		myTank = new MyTank("res\\img\\tank2_u.gif", Config.WIDTH / 2
-				- Config.PX / 2, Config.HEIGHT - Config.PX);
+				- Config.PX / 2 - 80, Config.HEIGHT - Config.PX);
+		
+		//坦克2 号
+		myTank2 = new MyTank("res\\img\\tank2_u.gif", Config.WIDTH / 2
+				- Config.PX / 2 + 80, Config.HEIGHT - Config.PX);
+		
+		//myTank.setSpeed(16);
 		this.addElement(myTank);
+		this.addElement(myTank2);
 
 	}
 
@@ -100,80 +113,105 @@ public class GameWindow extends Window {
 	@Override
 	protected void onKeyEvent(int key) {
 
-		// 上下左右事件
-		if (key == Keyboard.KEY_W || key == Keyboard.KEY_UP) {
+
+		// 上下左右事件  (	//坦克 1号)     WASD  空格
+		if (key == Keyboard.KEY_W) {
 			myTank.move(Direction.UP);
-		} else if (key == Keyboard.KEY_S || key == Keyboard.KEY_DOWN) {
+		} else if (key == Keyboard.KEY_S) {
 			myTank.move(Direction.DOWN);
-		} else if (key == Keyboard.KEY_A || key == Keyboard.KEY_LEFT) {
+		} else if (key == Keyboard.KEY_A) {
 			myTank.move(Direction.LEFT);
-		} else if (key == Keyboard.KEY_D || key == Keyboard.KEY_RIGHT) {
+		} else if (key == Keyboard.KEY_D) {
 			myTank.move(Direction.RIGHT);
 		} else if (key == Keyboard.KEY_F5) {
 			myTank.move(Direction.RESET);
-		} else if (key == Keyboard.KEY_RETURN) {
+		} else if (key == Keyboard.KEY_SPACE) {
 			Bullet bullet = myTank.shot();// 开炮
+			//bullet.setSpeed(1);
+			if (bullet != null) {
+				this.addElement(bullet);
+			}
+		}
+		
+		
+		// 上下左右事件(	//坦克 2号)    上下左右    回车
+		if (key == Keyboard.KEY_UP) {
+			myTank2.move(Direction.UP);
+		} else if (key == Keyboard.KEY_DOWN) {
+			myTank2.move(Direction.DOWN);
+		} else if (key == Keyboard.KEY_LEFT) {
+			myTank2.move(Direction.LEFT);
+		} else if (key == Keyboard.KEY_RIGHT) {
+			myTank2.move(Direction.RIGHT);
+		} else if (key == Keyboard.KEY_F5) {
+			myTank2.move(Direction.RESET);
+		} else if (key == Keyboard.KEY_RETURN) {
+			Bullet bullet = myTank2.shot();// 开炮
 			if (bullet != null) {
 				this.addElement(bullet);
 			}
 		}
 
+		
+
 	}
 
 	@Override
 	protected void onDisplayUpdate() {
-		System.out.println("冯海辰???????????????????????????");
-		
+
 		// 刷新帧
 
 		try {
 
 			Iterator<Element> it = mElementList.iterator();
+			
+			
+			//System.out.println(mElementList.size());
+			
 			while (it.hasNext()) {
 				Element ele = (Element) it.next();
 
-				// 判断当前元素是否为
-				if (ele instanceof MyTank) {
-					MyTank tank = (MyTank) ele;
+				if (ele instanceof Bullet) {
+					boolean bool = ((Bullet)ele).isDestroy();
+					
+					if (bool) {
+						it.remove();
+					}
+				}
+				
+				// 判断当前元素是否为  可移动元素
+				if (ele instanceof Moveable) {
+					Moveable moveable = (Moveable) ele;
+					
 					Iterator<Element> it2 = mElementList.iterator();
+					
 					while (it2.hasNext()) {
 						Element element2 = (Element) it2.next();
 
-						if (element2 instanceof Steel || element2 instanceof Water) {
+						if (element2 instanceof Blockable) {
 							// 如果元素属于 不可通过元素
-							boolean bool = tank.checkCollsion(element2);
+							Blockable block = (Blockable)element2;
+							boolean bool = moveable.checkCollsion(block);
 							if (bool) {
 								break;// 如果发生碰撞就终止循环
 							}
 						}
 					}
 				}
-
+				
 				ele.draw();
 			}
 
 		} catch (Exception e) {
 			System.out.println("有异常情况 ： " + e.getMessage());
 		}
-
 	}
 
-	public static void playSound(String res) {
-		try {
-			SoundUtils.play(res);
-		} catch (IOException e) {
-			System.out.println("出了问题:" + e.getMessage());
-		}
-	}
 
-	public static void drawImg(String res, int x, int y) {
-		try {
-			DrawUtils.draw(res, x, y);
-		} catch (IOException e) {
-			System.out.println("出了问题:" + e.getMessage());
-		}
-	}
-
+	/**
+	 * 添加元素  到  集合
+	 * @param element
+	 */
 	private void addElement(Element element) {
 		this.mElementList.add(element);
 		this.mElementList.sort(new Comparator<Element>() {

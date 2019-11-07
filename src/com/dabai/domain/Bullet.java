@@ -2,8 +2,10 @@ package com.dabai.domain;
 
 import java.io.IOException;
 
+import com.dabai.game.Config;
 import com.dabai.utils.Direction;
 import com.dabai.utils.DrawUtils;
+import com.dabai.utils.PlaySrc;
 
 /**
  * 炮弹类
@@ -14,7 +16,11 @@ public class Bullet extends Element {
 
 	private Direction direction;// 方向
 	private int power;// 取决于坦克
-	private int speed = 3;
+	private int speed = 10;
+
+	public void setSpeed(int speed) {
+		this.speed = speed;
+	}
 
 	public Bullet(String imgPath, int x, int y) {
 		super(imgPath, x, y);
@@ -23,13 +29,13 @@ public class Bullet extends Element {
 
 	public Bullet(MyTank myTank) {
 
-		super("res\\img\\bullet_u.gif", 20, 20);
+		super("res\\img\\bullet_u.gif", 1110, 20);
 
 		this.direction = myTank.getDirection();
 		this.power = myTank.getPower();
 		this.imgPath = "res\\img\\bullet_u.gif";
 
-		System.out.println(direction);
+		//System.out.println(direction);
 
 		try {
 			int[] size = DrawUtils.getSize(this.imgPath);
@@ -65,6 +71,8 @@ public class Bullet extends Element {
 			break;
 		}
 
+		PlaySrc.playSound("res\\snd\\fire.wav");
+		
 	}
 
 	// 重写父类 画的方法，这个子弹 归bullet类来画
@@ -88,12 +96,20 @@ public class Bullet extends Element {
 		default:
 			break;
 		}
-		
-		
-		
-		
-		
 		super.draw();
 	}
+	
+	/**
+	 * 检查炮弹是否飞出窗体
+	 */
+	public boolean isDestroy() {
+		if (y < 0 - height || y > Config.HEIGHT || x < 0 - width || x > Config.WIDTH) {
+			return true;
+		}else{
+			return false;
+		}
+	}
+	
+	
 
 }

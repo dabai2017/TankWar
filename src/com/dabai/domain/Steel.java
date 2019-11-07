@@ -1,5 +1,7 @@
 package com.dabai.domain;
 
+import com.dabai.domain.interfaces.Blockable;
+
 
 /**
  * 铁墙对象
@@ -7,7 +9,7 @@ package com.dabai.domain;
  *19-9-19
  */
 
-public class Steel extends Element{
+public class Steel extends Element implements Blockable{
 	
 	//构造方法：无参,有参
 	public Steel(String imgPath,int x,int y){

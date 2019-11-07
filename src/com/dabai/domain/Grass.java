@@ -7,7 +7,7 @@ package com.dabai.domain;
  *19-9-19
  */
 
-public class Grass extends Element{
+public class Grass extends Element {
 
 	//构造方法：无参,有参
 	public Grass(String imgPath,int x,int y){

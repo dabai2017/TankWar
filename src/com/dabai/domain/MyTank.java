@@ -1,16 +1,20 @@
 package com.dabai.domain;
 
+import com.dabai.domain.interfaces.Blockable;
+import com.dabai.domain.interfaces.Moveable;
 import com.dabai.game.Config;
 import com.dabai.utils.CollsionUtils;
 import com.dabai.utils.Direction;
 
-public class MyTank extends Element {
+public class MyTank extends Element implements Moveable{
 
 	private int blood;
 	private int speed = 16;
 	private int power;
 	private Direction direction = Direction.UP;
 
+	private int bullettime = 400;
+	
 	private long lastFire = 0l;
 	
 	public MyTank(String imgPath, int x, int y) {
@@ -110,7 +114,7 @@ public class MyTank extends Element {
 		
 		long nowTime = System.currentTimeMillis();//获得当前时间戳
 		
-		if ((nowTime - lastFire) < 500) {
+		if ((nowTime - lastFire) < bullettime) {
 			return null;
 		}
 		lastFire = nowTime;
@@ -119,7 +123,14 @@ public class MyTank extends Element {
 
 	
 	private Direction unmoveDirection;//不可移动的方向
-	public boolean checkCollsion(Element element) {
+	
+	
+	
+	//实现接口中的方法  
+	public boolean checkCollsion(Blockable blockable) {
+		
+		Element element = (Element)blockable;
+		
 		int x1 = element.x;
 		int y1 = element.y;
 		int w1 = element.width;
@@ -164,6 +175,19 @@ public class MyTank extends Element {
 	public Direction getDirection() {
 		return direction;
 	}
+
+
+
+	public void setSpeed(int speed) {
+		this.speed = speed;
+	}
+
+
+
+	public void setBullettime(int bullettime) {
+		this.bullettime = bullettime;
+	}
+	
 	
 
 

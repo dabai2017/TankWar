@@ -1,5 +1,7 @@
 package com.dabai.domain;
 
+import com.dabai.domain.interfaces.Blockable;
+
 /**
  * 
  * @author 故事与猫
@@ -16,7 +18,7 @@ package com.dabai.domain;
  *19-9-19
  */
 
-public class Wall extends Element{
+public class Wall extends Element implements Blockable{
 
 	private int blood;//血量
 	//构造方法：无参,有参
