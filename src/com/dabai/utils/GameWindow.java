@@ -1,26 +1,22 @@
 package com.dabai.utils;
 
-import java.awt.AWTException;
-import java.awt.Robot;
-import java.awt.event.KeyEvent;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Comparator;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.lwjgl.input.Keyboard;
 
 import com.dabai.domain.interfaces.*;
 import com.dabai.domain.*;
 import com.dabai.game.Config;
-import com.dabai.game.TankApp;
 
 public class GameWindow extends Window {
 
 	// 新建一组砖墙对象
-	public List<Element> mElementList = new ArrayList<Element>();
+	public List<Element> mElementList = new CopyOnWriteArrayList<Element>();
 
 	private MyTank myTank;
 	private MyTank myTank2;
@@ -114,8 +110,8 @@ public class GameWindow extends Window {
 				- Config.PX / 2 + 80, Config.HEIGHT - Config.PX);
 		
 		
-		myTank2.setBullettime(10);
-		myTank2.skin(1);
+		//myTank2.setBullettime(10);
+		//myTank2.skin(1);
 	
 		
 		this.addElement(myTank);
@@ -179,7 +175,7 @@ public class GameWindow extends Window {
 
 		// 刷新帧
 
-		try {
+//		try {
 
 			Iterator<Element> it = mElementList.iterator();
 			
@@ -193,7 +189,7 @@ public class GameWindow extends Window {
 					boolean bool = ((Bullet)ele).isDestroy();
 					
 					if (bool) {
-						it.remove();
+					mElementList.remove(ele);
 					}
 				}
 				
@@ -217,12 +213,51 @@ public class GameWindow extends Window {
 					}
 				}
 				
+				//判断元素一  是炮弹类   判断是否是 击中目标   如果是则 销毁炮弹  则播放销毁 场景。
+		
+				
+				/*	
+				 * 需要改需要改需要改需要改需要改
+				 * 
+				 * */
+				if (ele instanceof Bullet) {
+					Bullet bullet = (Bullet)ele;
+					Iterator<Element> it3 = mElementList.iterator();
+					while (it3.hasNext()) {
+						Element element3 = (Element)it3.next();
+						if(element3 instanceof Steel){
+							boolean bool = bullet.checkCollsion(element3);
+							
+							if (bool) {
+								//移除此炮弹
+								mElementList.remove(ele);
+								
+								Steel steel = (Steel)element3;
+								Blast blast = steel.showExplosive();
+								addElement(blast);
+								
+								break;
+							}
+						}
+					}
+				}
+				
+				if (ele instanceof Blast) {
+					Blast blast = (Blast) ele;
+					boolean bool = blast.isDestroy();
+					if (bool) {
+						mElementList.remove(blast);
+					}
+				}
+				
+				
+				
 				ele.draw();
 			}
 
-		} catch (Exception e) {
-			System.out.println("有异常情况 ： " + e.getMessage());
-		}
+//		} catch (Exception e) {
+//			System.out.println("有异常情况 ： " + e.getMessage());
+//		}
 	}
 
 

@@ -134,11 +134,6 @@ public class MyTank extends Element implements Moveable{
 		default:
 			break;
 		}
-		
-		
-		
-		
-		
 	}
 	
 	public Bullet shot() {

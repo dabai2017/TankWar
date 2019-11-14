@@ -2,7 +2,9 @@ package com.dabai.domain;
 
 import java.io.IOException;
 
+import com.dabai.domain.interfaces.Blockable;
 import com.dabai.game.Config;
+import com.dabai.utils.CollsionUtils;
 import com.dabai.utils.Direction;
 import com.dabai.utils.DrawUtils;
 import com.dabai.utils.PlaySrc;
@@ -110,6 +112,17 @@ public class Bullet extends Element {
 		}
 	}
 	
-	
+
+	//实现接口中的方法  
+	//判断炮弹是否击中目标  障碍物是  element
+	public boolean checkCollsion(Element element) {
+			//被击中目标的坐标
+		int x1 = element.x;
+		int y1 = element.y;
+		int w1 = element.width;
+		int h1 = element.height;
+		
+		return CollsionUtils.isCollsionWithRect(x1, y1, w1, h1, x, y, width, height);
+	}
 
 }
