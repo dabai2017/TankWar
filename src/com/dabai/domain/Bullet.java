@@ -2,6 +2,7 @@ package com.dabai.domain;
 
 import java.io.IOException;
 
+import com.dabai.domain.interfaces.Attackable;
 import com.dabai.domain.interfaces.Blockable;
 import com.dabai.game.Config;
 import com.dabai.utils.CollsionUtils;
@@ -14,7 +15,7 @@ import com.dabai.utils.PlaySrc;
  * 
  * @author 故事与猫 2019-10-21 下午7:54:18
  */
-public class Bullet extends Element {
+public class Bullet extends Element implements Attackable{
 
 	private Direction direction;// 方向
 	private int power;// 取决于坦克
@@ -123,6 +124,12 @@ public class Bullet extends Element {
 		int h1 = element.height;
 		
 		return CollsionUtils.isCollsionWithRect(x1, y1, w1, h1, x, y, width, height);
+	}
+
+	@Override
+	public int getPower() {
+		// TODO Auto-generated method stub
+		return this.power;
 	}
 
 }

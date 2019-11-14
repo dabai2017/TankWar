@@ -1,6 +1,7 @@
 package com.dabai.domain;
 
 import com.dabai.domain.interfaces.Blockable;
+import com.dabai.domain.interfaces.Hitable;
 
 
 /**
@@ -9,7 +10,7 @@ import com.dabai.domain.interfaces.Blockable;
  *19-9-19
  */
 
-public class Steel extends Element implements Blockable{
+public class Steel extends Element implements Blockable,Hitable{
 	
 	private int blood;//血量
 	//构造方法：无参,有参

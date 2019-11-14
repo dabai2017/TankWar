@@ -110,7 +110,7 @@ public class GameWindow extends Window {
 				- Config.PX / 2 + 80, Config.HEIGHT - Config.PX);
 		
 		
-		//myTank2.setBullettime(10);
+		myTank2.setBullettime(10);
 		//myTank2.skin(1);
 	
 		
@@ -220,25 +220,29 @@ public class GameWindow extends Window {
 				 * 需要改需要改需要改需要改需要改
 				 * 
 				 * */
-				if (ele instanceof Bullet) {
-					Bullet bullet = (Bullet)ele;
+				if (ele instanceof Attackable) {
+					Attackable attackable = (Attackable)ele;
 					Iterator<Element> it3 = mElementList.iterator();
 					while (it3.hasNext()) {
 						Element element3 = (Element)it3.next();
-						if(element3 instanceof Steel){
-							boolean bool = bullet.checkCollsion(element3);
+						
+						
+						if(element3 instanceof Hitable){
+							boolean bool = attackable.checkCollsion(element3);
 							
 							if (bool) {
 								//移除此炮弹
 								mElementList.remove(ele);
 								
-								Steel steel = (Steel)element3;
-								Blast blast = steel.showExplosive();
+								Hitable hitable = (Hitable)element3;
+								Blast blast = hitable.showExplosive();
 								addElement(blast);
 								
 								break;
 							}
 						}
+						
+
 					}
 				}
 				
@@ -249,8 +253,6 @@ public class GameWindow extends Window {
 						mElementList.remove(blast);
 					}
 				}
-				
-				
 				
 				ele.draw();
 			}
