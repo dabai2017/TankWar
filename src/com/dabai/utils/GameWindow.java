@@ -20,7 +20,7 @@ public class GameWindow extends Window {
 
 	private MyTank myTank;
 	private MyTank myTank2;
-	
+	 
 	
 	public GameWindow(String title, int width, int height, int fps) {
 
