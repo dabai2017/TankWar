@@ -11,7 +11,7 @@ import com.dabai.domain.Blast;
 public interface Hitable {
 
 	//被攻击力击中   返回爆炸物
-	public Blast showExplosive();
+	public Blast showExplosive(Attackable attackable);
 		
 	
 	

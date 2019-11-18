@@ -54,7 +54,7 @@ public class GameWindow extends Window {
 			Steel steel = new Steel("res\\img\\steel.gif", i * Config.PX,
 					Config.PX);
 
-			if (i > 4 && i < 14) {
+			if (i > 10 && i < 14) {
 				this.addElement(steel);
 				continue;
 			}
@@ -235,22 +235,24 @@ public class GameWindow extends Window {
 								mElementList.remove(ele);
 								
 								Hitable hitable = (Hitable)element3;
-								Blast blast = hitable.showExplosive();
+								Blast blast = hitable.showExplosive(attackable);
 								addElement(blast);
 								
 								break;
 							}
 						}
-						
-
 					}
 				}
 				
-				if (ele instanceof Blast) {
-					Blast blast = (Blast) ele;
-					boolean bool = blast.isDestroy();
+				if (ele instanceof Destroyable) {
+					Destroyable destroyable = (Destroyable) ele;
+					boolean bool = destroyable.isDestroy();
 					if (bool) {
-						mElementList.remove(blast);
+						Blast blast = destroyable.showDestroy();
+						if (blast != null) {
+							addElement(blast);
+						}
+						mElementList.remove(destroyable);
 					}
 				}
 				

@@ -2,10 +2,11 @@ package com.dabai.domain;
 
 import java.io.IOException;
 
+import com.dabai.domain.interfaces.Destroyable;
 import com.dabai.utils.DrawUtils;
 import com.dabai.utils.PlaySrc;
 
-public class Blast extends Element {
+public class Blast extends Element implements Destroyable{
 
 	boolean isDestroy;
 	int index = 0;
@@ -59,6 +60,12 @@ public class Blast extends Element {
 
 	public boolean isDestroy() {
 		return this.isDestroy;
+	}
+
+	@Override
+	public Blast showDestroy() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

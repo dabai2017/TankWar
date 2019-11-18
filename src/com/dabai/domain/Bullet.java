@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import com.dabai.domain.interfaces.Attackable;
 import com.dabai.domain.interfaces.Blockable;
+import com.dabai.domain.interfaces.Destroyable;
 import com.dabai.game.Config;
 import com.dabai.utils.CollsionUtils;
 import com.dabai.utils.Direction;
@@ -15,7 +16,7 @@ import com.dabai.utils.PlaySrc;
  * 
  * @author 故事与猫 2019-10-21 下午7:54:18
  */
-public class Bullet extends Element implements Attackable{
+public class Bullet extends Element implements Attackable,Destroyable{
 
 	private Direction direction;// 方向
 	private int power;// 取决于坦克
@@ -130,6 +131,12 @@ public class Bullet extends Element implements Attackable{
 	public int getPower() {
 		// TODO Auto-generated method stub
 		return this.power;
+	}
+
+	@Override
+	public Blast showDestroy() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

@@ -14,6 +14,14 @@ public class Config {
 	public static int HEIGHT = 640;
 	
 	public static int FPS = 60;//刷新率
+	
+	public static int S_BLOOD;//铁墙
+	public static int W_BLOOD;//砖
+	public static int POWER;//攻击力  每次攻击目标减少血量
+	
+	
+	
+	
 	private static Properties properties;
 	
 
@@ -24,14 +32,17 @@ public class Config {
 		properties = new Properties();
 		try {properties.load(new FileInputStream("src/config.properties"));} catch (FileNotFoundException e) {} catch (IOException e) {}
 		
-
-		
 		if (properties != null) {
 			TITLE = properties.getProperty("TITLE");
 			PX = Integer.parseInt(properties.getProperty("PX"));
 			WIDTH = Integer.parseInt(properties.getProperty("WIDTH"));
 			HEIGHT = Integer.parseInt(properties.getProperty("HEIGHT"));
 			FPS = Integer.parseInt(properties.getProperty("FPS"));
+			
+			S_BLOOD = Integer.parseInt(properties.getProperty("S_BLOOD"));
+			W_BLOOD = Integer.parseInt(properties.getProperty("W_BLOOD"));
+			POWER = Integer.parseInt(properties.getProperty("POWER"));
+			
 			
 		}
 

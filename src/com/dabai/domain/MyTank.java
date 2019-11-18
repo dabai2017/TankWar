@@ -1,12 +1,13 @@
 package com.dabai.domain;
 
 import com.dabai.domain.interfaces.Blockable;
+import com.dabai.domain.interfaces.Destroyable;
 import com.dabai.domain.interfaces.Moveable;
 import com.dabai.game.Config;
 import com.dabai.utils.CollsionUtils;
 import com.dabai.utils.Direction;
 
-public class MyTank extends Element implements Moveable{
+public class MyTank extends Element implements Moveable,Destroyable{
 
 	private int blood;
 	private int speed = 16;
@@ -20,6 +21,9 @@ public class MyTank extends Element implements Moveable{
 	public MyTank(String imgPath, int x, int y) {
 		super(imgPath, x, y);
 		// TODO Auto-generated constructor stub
+		
+		power = Config.POWER;
+		
 	}
 	
 
@@ -200,16 +204,26 @@ public class MyTank extends Element implements Moveable{
 		return direction;
 	}
 
-
-
 	public void setSpeed(int speed) {
 		this.speed = speed;
 	}
 
-
-
 	public void setBullettime(int bullettime) {
 		this.bullettime = bullettime;
+	}
+
+
+	@Override
+	public Blast showDestroy() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public boolean isDestroy() {
+		// TODO Auto-generated method stub
+		return false;
 	}
 	
 	
