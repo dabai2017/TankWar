@@ -102,11 +102,11 @@ public class GameWindow extends Window {
 
 		
 		//坦克 1号
-		myTank = new MyTank("res\\img\\tank2_u.gif", Config.WIDTH / 2
+		myTank = new MyTank("res\\img\\tank_u.gif", Config.WIDTH / 2
 				- Config.PX / 2 - 80, Config.HEIGHT - Config.PX);
 		
 		//坦克2 号
-		myTank2 = new MyTank("res\\img\\tank2_u.gif", Config.WIDTH / 2
+		myTank2 = new MyTank("res\\img\\tank_u.gif", Config.WIDTH / 2
 				- Config.PX / 2 + 80, Config.HEIGHT - Config.PX);
 		
 		
