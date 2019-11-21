@@ -16,7 +16,7 @@ import com.dabai.utils.PlaySrc;
  * 
  * @author 故事与猫 2019-10-21 下午7:54:18
  */
-public class Bullet extends Element implements Attackable,Destroyable{
+public class Bullet extends Element implements Attackable, Destroyable {
 
 	private Direction direction;// 方向
 	private int power;// 取决于坦克
@@ -33,13 +33,13 @@ public class Bullet extends Element implements Attackable,Destroyable{
 
 	public Bullet(MyTank myTank) {
 
-		super("res\\img\\bullet_u.gif", 1110, 20);
+		super("res\\img\\bullet_u.gif", 10, 20);
 
 		this.direction = myTank.getDirection();
 		this.power = myTank.getPower();
 		this.imgPath = "res\\img\\bullet_u.gif";
 
-		//System.out.println(direction);
+		// System.out.println(direction);
 
 		try {
 			int[] size = DrawUtils.getSize(this.imgPath);
@@ -50,25 +50,66 @@ public class Bullet extends Element implements Attackable,Destroyable{
 			e.printStackTrace();
 		}
 
+		// 拿到随机偏移量
+		int pianyi = (int) (Math.random() * 3);
+
 		switch (direction) {
 		case UP:
-			this.x = myTank.x + (myTank.width - this.width) / 2;
+			if (pianyi == 0) {
+				// 往左偏移
+				this.x = myTank.x + (myTank.width - this.width) / 2 - 50;
+			} else if (pianyi == 1) {
+				// 往右偏移
+				this.x = myTank.x + (myTank.width - this.width) / 2 + 50;
+			} else {
+				this.x = myTank.x + (myTank.width - this.width) / 2;
+			}
+
 			this.y = myTank.y - this.height / 2;
 			this.imgPath = "res\\img\\bullet_u.gif";
 			break;
 		case DOWN:
-			this.x = myTank.x + (myTank.width - this.width) / 2;
+
+			if (pianyi == 0) {
+				// 往左偏移
+				this.x = myTank.x + (myTank.width - this.width) / 2 - 50;
+			} else if (pianyi == 1) {
+				// 往右偏移
+				this.x = myTank.x + (myTank.width - this.width) / 2 + 50;
+			} else {
+				this.x = myTank.x + (myTank.width - this.width) / 2;
+			}
+
 			this.y = myTank.y + (myTank.height - this.height / 2);
 			this.imgPath = "res\\img\\bullet_d.gif";
 			break;
 		case LEFT:
 			this.x = myTank.x - this.width / 2;
-			this.y = myTank.y + (myTank.height - this.height) / 2;
+
+			if (pianyi == 0) {
+				// 往左偏移
+				this.y = myTank.y + (myTank.height - this.height) / 2 - 50;
+			} else if (pianyi == 1) {
+				// 往右偏移
+				this.y = myTank.y + (myTank.height - this.height) / 2 + 50;
+			} else {
+				this.y = myTank.y + (myTank.height - this.height) / 2;
+			}
+
 			this.imgPath = "res\\img\\bullet_l.gif";
 			break;
 		case RIGHT:
 			this.x = myTank.x + myTank.width - this.width / 2;
-			this.y = myTank.y + (myTank.height - this.height) / 2;
+
+			if (pianyi == 0) {
+				// 往左偏移
+				this.y = myTank.y + (myTank.height - this.height) / 2 - 50;
+			} else if (pianyi == 1) {
+				// 往右偏移
+				this.y = myTank.y + (myTank.height - this.height) / 2 + 50;
+			} else {
+				this.y = myTank.y + (myTank.height - this.height) / 2;
+			}
 			this.imgPath = "res\\img\\bullet_r.gif";
 			break;
 		default:
@@ -76,13 +117,13 @@ public class Bullet extends Element implements Attackable,Destroyable{
 		}
 
 		PlaySrc.playSound("res\\snd\\fire.wav");
-		
+
 	}
 
 	// 重写父类 画的方法，这个子弹 归bullet类来画
 	@Override
 	public void draw() {
-		
+
 		switch (direction) {
 		case UP:
 			this.y -= this.speed;
@@ -102,29 +143,30 @@ public class Bullet extends Element implements Attackable,Destroyable{
 		}
 		super.draw();
 	}
-	
+
 	/**
 	 * 检查炮弹是否飞出窗体
 	 */
 	public boolean isDestroy() {
-		if (y < 0 - height || y > Config.HEIGHT || x < 0 - width || x > Config.WIDTH) {
+		if (y < 0 - height || y > Config.HEIGHT || x < 0 - width
+				|| x > Config.WIDTH) {
 			return true;
-		}else{
+		} else {
 			return false;
 		}
 	}
-	
 
-	//实现接口中的方法  
-	//判断炮弹是否击中目标  障碍物是  element
+	// 实现接口中的方法
+	// 判断炮弹是否击中目标 障碍物是 element
 	public boolean checkCollsion(Element element) {
-			//被击中目标的坐标
+		// 被击中目标的坐标
 		int x1 = element.x;
 		int y1 = element.y;
 		int w1 = element.width;
 		int h1 = element.height;
-		
-		return CollsionUtils.isCollsionWithRect(x1, y1, w1, h1, x, y, width, height);
+
+		return CollsionUtils.isCollsionWithRect(x1, y1, w1, h1, x, y, width,
+				height);
 	}
 
 	@Override

@@ -20,7 +20,6 @@ public class GameWindow extends Window {
 
 	private MyTank myTank;
 	private MyTank myTank2;
-	 
 	
 	public GameWindow(String title, int width, int height, int fps) {
 
@@ -48,13 +47,13 @@ public class GameWindow extends Window {
 
 		// 窗体宽度/px = 一个窗体可以摆放几块
 		// 土墙
-		for (int i = 0; i < Config.WIDTH / Config.PX - 1; i++) {
+		for (int i = 0; i < Config.WIDTH / Config.PX - 5; i++) {
 
 			// 改变一些砖墙对象
 			Steel steel = new Steel("res\\img\\steel.gif", i * Config.PX,
 					Config.PX);
 
-			if (i > 10 && i < 14) {
+			if (i > 7 && i < 10) {
 				this.addElement(steel);
 				continue;
 			}
@@ -113,10 +112,18 @@ public class GameWindow extends Window {
 		myTank2.setBullettime(10);
 		//myTank2.skin(1);
 	
-		
 		this.addElement(myTank);
 		this.addElement(myTank2);
 
+		
+		EnemyTank enemyTank = new EnemyTank("res\\img\\enemy_1_d.gif", 0, 0);
+		this.addElement(enemyTank);
+		
+		EnemyTank enemyTank2 = new EnemyTank("res\\img\\enemy_1_d.gif", Config.WIDTH - Config.PX, 0);
+		this.addElement(enemyTank2);
+		
+		
+		
 	}
 
 	@Override
@@ -161,24 +168,19 @@ public class GameWindow extends Window {
 			myTank2.move(Direction.RESET);
 		} else if (key == Keyboard.KEY_RETURN) {
 			Bullet bullet = myTank2.shot();// 开炮
+			bullet.setSpeed(50);
 			if (bullet != null) {
 				this.addElement(bullet);
 			}
 		}
-
-		
 
 	}
 
 	@Override
 	protected void onDisplayUpdate() {
 
-		// 刷新帧
-
-//		try {
-
+		
 			Iterator<Element> it = mElementList.iterator();
-			
 			
 			//System.out.println(mElementList.size());
 			
@@ -214,12 +216,6 @@ public class GameWindow extends Window {
 				}
 				
 				//判断元素一  是炮弹类   判断是否是 击中目标   如果是则 销毁炮弹  则播放销毁 场景。
-		
-				
-				/*	
-				 * 需要改需要改需要改需要改需要改
-				 * 
-				 * */
 				if (ele instanceof Attackable) {
 					Attackable attackable = (Attackable)ele;
 					Iterator<Element> it3 = mElementList.iterator();
@@ -256,12 +252,15 @@ public class GameWindow extends Window {
 					}
 				}
 				
+				
+				if (ele instanceof EnemyTank) {
+					EnemyTank enemyTank = (EnemyTank)ele;
+					enemyTank.move();
+				}
+				
 				ele.draw();
 			}
 
-//		} catch (Exception e) {
-//			System.out.println("有异常情况 ： " + e.getMessage());
-//		}
 	}
 
 

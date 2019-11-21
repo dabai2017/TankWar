@@ -84,6 +84,8 @@ public class MyTank extends Element implements Moveable{
 		} else if (y >= Config.HEIGHT - this.height) {
 			y = Config.HEIGHT - this.height;
 		}
+		
+		
 	}
 
 	/**

@@ -11,36 +11,33 @@ public class EnemyTank extends Element implements Moveable{
 	private int blood;
 	private int speed = 16;
 	private int power;
-	private Direction direction = Direction.UP;
+	private Direction direction = Direction.DOWN;
 
 	private int bullettime = 400;
 	
 	private long lastFire = 0l;
+	private long lastMove = 0l;
 	
 	public EnemyTank(String imgPath, int x, int y) {
 		super(imgPath, x, y);
-		// TODO Auto-generated constructor stub
-		
+
 		power = Config.POWER;
 		
 	}
 	
 
-	public void move(Direction direction) {
-		
-		if (!this.direction.equals(direction)) {
-			this.direction = direction;
+	public void move() {
+		long nowTime = System.currentTimeMillis();
+		if (nowTime - lastMove < 10) {
 			return;
 		}
-		
-		//如果当前移动方向是不可移动方向，，则直接退出
+		lastMove = nowTime;
+		//如果当前移动方向是不可移动方向
 		if (direction.equals(unmoveDirection)) {
+			direction = this.getRandomDirection();//无法移动时获取随机方向
 			return;
 		}
 		
-		
-		this.direction = direction;
-
 		switch (direction) {
 		case UP:
 			y -= speed;
@@ -59,7 +56,7 @@ public class EnemyTank extends Element implements Moveable{
 			break;
 
 		case RESET:
-//复位
+			//复位
 			x = Config.WIDTH / 2 - Config.PX / 2;
 			y = Config.HEIGHT - Config.PX;
 
@@ -69,20 +66,24 @@ public class EnemyTank extends Element implements Moveable{
 		}
 
 		
-		
 		/**
 		 * 越界检测
 		 */
-		if (x <= 0) {
+		if (x < 0) {
+			direction = this.getRandomDirection();
 			x = 0;
-		} else if (x >= Config.WIDTH - this.width) {
+		} else if (x > Config.WIDTH - this.width) {
+			direction = this.getRandomDirection();
 			x = Config.WIDTH - this.width;
 		}
 
-		if (y <= 0) {
+		if (y < 0) {
+			direction = this.getRandomDirection();
 			y = 0;
-		} else if (y >= Config.HEIGHT - this.height) {
+		} else if (y > Config.HEIGHT - this.height) {
+			direction = this.getRandomDirection();
 			y = Config.HEIGHT - this.height;
+			
 		}
 	}
 
@@ -91,10 +92,10 @@ public class EnemyTank extends Element implements Moveable{
 	 */
 
 	
-	String tank_u = "res\\img\\tank_u.gif";
-	String tank_d = "res\\img\\tank_d.gif";
-	String tank_l = "res\\img\\tank_l.gif";
-	String tank_r = "res\\img\\tank_r.gif";
+	String tank_u = "res\\img\\enemy_1_u.gif";
+	String tank_d = "res\\img\\enemy_1_d.gif";
+	String tank_l = "res\\img\\enemy_1_l.gif";
+	String tank_r = "res\\img\\enemy_1_r.gif";
 	
 	@Override
 	public void draw() {
@@ -203,16 +204,29 @@ public class EnemyTank extends Element implements Moveable{
 		return direction;
 	}
 
-
-
 	public void setSpeed(int speed) {
 		this.speed = speed;
 	}
 
-
-
 	public void setBullettime(int bullettime) {
 		this.bullettime = bullettime;
+	}
+	
+	private Direction getRandomDirection() {
+		int random = (int)(Math.random() * 4);
+		
+		switch (random) {
+		case 0:
+			return Direction.UP;
+		case 1:
+			return Direction.DOWN;
+		case 2:
+			return Direction.LEFT;
+		case 3:
+			return Direction.RIGHT;
+		default:
+			return Direction.UP;
+		}
 	}
 	
 	
