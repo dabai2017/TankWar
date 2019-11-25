@@ -17,6 +17,10 @@ public class Config {
 	
 	public static int S_BLOOD;//铁墙
 	public static int W_BLOOD;//砖
+	
+	public static int M_BLOOD;//我方
+	public static int E_BLOOD;//敌方
+	
 	public static int POWER;//攻击力  每次攻击目标减少血量
 	
 	
@@ -41,6 +45,9 @@ public class Config {
 			
 			S_BLOOD = Integer.parseInt(properties.getProperty("S_BLOOD"));
 			W_BLOOD = Integer.parseInt(properties.getProperty("W_BLOOD"));
+			
+			M_BLOOD = Integer.parseInt(properties.getProperty("M_BLOOD"));
+			E_BLOOD = Integer.parseInt(properties.getProperty("E_BLOOD"));
 			POWER = Integer.parseInt(properties.getProperty("POWER"));
 			
 			

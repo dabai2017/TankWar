@@ -1,28 +1,18 @@
 package com.dabai.domain;
 
-import com.dabai.domain.interfaces.Blockable;
-import com.dabai.domain.interfaces.Moveable;
 import com.dabai.game.Config;
-import com.dabai.utils.CollsionUtils;
 import com.dabai.utils.Direction;
 
-public class EnemyTank extends Element implements Moveable{
+public class EnemyTank extends Tank{
 
-	private int blood;
-	private int speed = 16;
-	private int power;
-	private Direction direction = Direction.DOWN;
 
-	private int bullettime = 400;
-	
-	private long lastFire = 0l;
 	private long lastMove = 0l;
 	
 	public EnemyTank(String imgPath, int x, int y) {
 		super(imgPath, x, y);
 
 		power = Config.POWER;
-		
+		blood = Config.E_BLOOD;
 	}
 	
 
@@ -99,23 +89,7 @@ public class EnemyTank extends Element implements Moveable{
 	
 	@Override
 	public void draw() {
-		switch (direction) {
-		case UP:
-			this.imgPath = tank_u;
-			break;
-		case DOWN:
-			this.imgPath = tank_d;
-			break;
-		case LEFT:
-			this.imgPath = tank_l;
-			break;
-		case RIGHT:
-			this.imgPath = tank_r;
-			break;
-		default:
-			break;
-		}
-		super.draw();
+		this.drawTank();
 	}
 	
 	
@@ -148,61 +122,9 @@ public class EnemyTank extends Element implements Moveable{
 			return null;
 		}
 		lastFire = nowTime;
-		return null;
+		return new Bullet(this);
 	}
 
-	
-	private Direction unmoveDirection;//不可移动的方向
-	
-	//实现接口中的方法  
-	public boolean checkCollsion(Blockable blockable) {
-		
-		Element element = (Element)blockable;
-		
-		int x1 = element.x;
-		int y1 = element.y;
-		int w1 = element.width;
-		int h1 = element.height;
-		
-		int x2 = this.x;
-		int y2 = this.y;
-		
-		switch (direction) {
-		case UP:
-			y2 -= this.speed;
-			break;
-		case DOWN:
-			y2 += this.speed;
-			break;
-		case LEFT:
-			x2 -= this.speed;
-			break;
-		case RIGHT: 
-			x2 += this.speed;
-			break;
-
-		default:
-			break;
-		}
-		
-		boolean bool = CollsionUtils.isCollsionWithRect(x1, y1, w1, h1, x2, y2, width, height);
-		if (bool) {
-			this.unmoveDirection = direction;
-		}else {
-			this.unmoveDirection = null;
-		}
-		return bool;
-	}
-
-
-	public int getPower() {
-		return power;
-	}
-
-
-	public Direction getDirection() {
-		return direction;
-	}
 
 	public void setSpeed(int speed) {
 		this.speed = speed;
@@ -227,6 +149,35 @@ public class EnemyTank extends Element implements Moveable{
 		default:
 			return Direction.UP;
 		}
+	}
+
+
+	@Override
+	public void move(Direction direction) {
+		// TODO Auto-generated method stub
+		this.move();
+	}
+
+
+	@Override
+	public void drawTank() {
+		switch (direction) {
+		case UP:
+			this.imgPath = tank_u;
+			break;
+		case DOWN:
+			this.imgPath = tank_d;
+			break;
+		case LEFT:
+			this.imgPath = tank_l;
+			break;
+		case RIGHT:
+			this.imgPath = tank_r;
+			break;
+		default:
+			break;
+		}
+		super.draw();
 	}
 	
 	

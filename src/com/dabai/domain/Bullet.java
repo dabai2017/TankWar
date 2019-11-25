@@ -3,7 +3,6 @@ package com.dabai.domain;
 import java.io.IOException;
 
 import com.dabai.domain.interfaces.Attackable;
-import com.dabai.domain.interfaces.Blockable;
 import com.dabai.domain.interfaces.Destroyable;
 import com.dabai.game.Config;
 import com.dabai.utils.CollsionUtils;
@@ -31,7 +30,7 @@ public class Bullet extends Element implements Attackable, Destroyable {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Bullet(MyTank myTank) {
+	public Bullet(Tank myTank) {
 
 		super("res\\img\\bullet_u.gif", 10, 20);
 
