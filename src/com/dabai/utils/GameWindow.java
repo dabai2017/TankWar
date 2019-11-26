@@ -12,7 +12,8 @@ import org.lwjgl.input.Keyboard;
 import com.dabai.domain.interfaces.*;
 import com.dabai.domain.*;
 import com.dabai.game.Config;
-import com.dabai.maps.BaseMap1;
+import com.dabai.maps.*;
+
 
 public class GameWindow extends Window {
 
@@ -42,14 +43,14 @@ public class GameWindow extends Window {
 	@SuppressWarnings("unused")
 	@Override
 	protected void onCreate() {
-
 		// System.out.println("载入游戏欢迎音乐...");
 		// playSound("res\\snd\\start.wav");
 
-		int[][] walls = BaseMap1.walls;
-		int[][] steels = BaseMap1.steels;
-		int[][] waters = BaseMap1.waters;
-		int[][] grasss = BaseMap1.grasss;
+		
+		int[][] walls = BaseMap2.walls;
+		int[][] steels = BaseMap2.steels;
+		int[][] waters = BaseMap2.waters;
+		int[][] grasss = BaseMap2.grasss;
 
 		// 土墙
 		for (int i = 0; i < walls.length; i++) {

@@ -22,7 +22,7 @@ public abstract class Tank extends Element implements Moveable,Blockable,Hitable
 	protected int blood;
 	protected int speed = 16;
 	protected int power;
-	protected Direction direction = Direction.DOWN;
+	protected Direction direction = Direction.UP;
 
 	protected int bullettime = 400;
 	protected long lastFire = 0l;
