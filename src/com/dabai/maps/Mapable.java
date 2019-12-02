@@ -5,5 +5,6 @@ package com.dabai.maps;
  *
  */
 public interface Mapable {
+
 	
 }

@@ -13,6 +13,11 @@ public class MyTank extends Tank {
 		blood = Config.M_BLOOD;
 	}
 
+	public int getBlood() {
+		return blood;
+	}
+	
+	
 	public void move(Direction direction) {
 
 		if (!this.direction.equals(direction)) {

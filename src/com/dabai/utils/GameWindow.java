@@ -1,5 +1,9 @@
 package com.dabai.utils;
 
+import java.awt.Dialog;
+import java.awt.FlowLayout;
+import java.awt.Frame;
+import java.awt.Label;
 import java.io.IOException;
 import java.util.Comparator;
 
@@ -7,13 +11,14 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import javax.swing.JDialog;
+
 import org.lwjgl.input.Keyboard;
 
 import com.dabai.domain.interfaces.*;
 import com.dabai.domain.*;
 import com.dabai.game.Config;
 import com.dabai.maps.*;
-
 
 public class GameWindow extends Window {
 
@@ -46,7 +51,6 @@ public class GameWindow extends Window {
 		// System.out.println("载入游戏欢迎音乐...");
 		// playSound("res\\snd\\start.wav");
 
-		
 		int[][] walls = BaseMap2.walls;
 		int[][] steels = BaseMap2.steels;
 		int[][] waters = BaseMap2.waters;
@@ -68,7 +72,7 @@ public class GameWindow extends Window {
 					* Config.PX);
 			this.addElement(ele);
 		}
-		
+
 		// 水
 		for (int i = 0; i < waters.length; i++) {
 			int x1 = waters[i][0];
@@ -77,8 +81,7 @@ public class GameWindow extends Window {
 					* Config.PX);
 			this.addElement(ele);
 		}
-		
-		
+
 		// 草丛
 		for (int i = 0; i < grasss.length; i++) {
 			int x1 = grasss[i][0];
@@ -87,8 +90,6 @@ public class GameWindow extends Window {
 					* Config.PX);
 			this.addElement(ele);
 		}
-		
-
 
 		// 坦克 1号
 		myTank = new MyTank("res\\img\\tank_u.gif", Config.WIDTH / 2
@@ -141,23 +142,31 @@ public class GameWindow extends Window {
 			}
 		}
 
-		// 上下左右事件( //坦克 2号) 上下左右 回车
-		if (key == Keyboard.KEY_UP) {
-			myTank2.move(Direction.UP);
-		} else if (key == Keyboard.KEY_DOWN) {
-			myTank2.move(Direction.DOWN);
-		} else if (key == Keyboard.KEY_LEFT) {
-			myTank2.move(Direction.LEFT);
-		} else if (key == Keyboard.KEY_RIGHT) {
-			myTank2.move(Direction.RIGHT);
-		} else if (key == Keyboard.KEY_F5) {
-			myTank2.move(Direction.RESET);
-		} else if (key == Keyboard.KEY_RETURN) {
-			Bullet bullet = myTank2.shot();// 开炮
-			bullet.setSpeed(50);
-			if (bullet != null) {
-				this.addElement(bullet);
+		if (myTank2.getBlood() <= 0) {
+
+			System.out.println("已经死亡  不能发射和移动");
+			
+		} else {
+
+			// 上下左右事件( //坦克 2号) 上下左右 回车
+			if (key == Keyboard.KEY_UP) {
+				myTank2.move(Direction.UP);
+			} else if (key == Keyboard.KEY_DOWN) {
+				myTank2.move(Direction.DOWN);
+			} else if (key == Keyboard.KEY_LEFT) {
+				myTank2.move(Direction.LEFT);
+			} else if (key == Keyboard.KEY_RIGHT) {
+				myTank2.move(Direction.RIGHT);
+			} else if (key == Keyboard.KEY_F5) {
+				myTank2.move(Direction.RESET);
+			} else if (key == Keyboard.KEY_RETURN) {
+				Bullet bullet = myTank2.shot();// 开炮
+				bullet.setSpeed(50);
+				if (bullet != null) {
+					this.addElement(bullet);
+				}
 			}
+
 		}
 
 	}
@@ -208,6 +217,16 @@ public class GameWindow extends Window {
 					Element element3 = (Element) it3.next();
 
 					if (element3 instanceof Hitable) {
+
+						if (ele instanceof Bullet) {
+							Bullet bullet = (Bullet) ele;
+							// 判断是不是自己
+							if (bullet.getTank().getClass() == element3
+									.getClass()) {
+								continue;
+							}
+						}
+
 						boolean bool = attackable.checkCollsion(element3);
 
 						if (bool) {
