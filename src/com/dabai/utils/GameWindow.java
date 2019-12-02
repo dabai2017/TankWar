@@ -111,7 +111,7 @@ public class GameWindow extends Window {
 
 		EnemyTank enemyTank2 = new EnemyTank("res\\img\\enemy_1_d.gif",
 				Config.WIDTH - Config.PX, 0);
-		this.addElement(enemyTank2);
+		//this.addElement(enemyTank2);
 
 	}
 
@@ -185,7 +185,7 @@ public class GameWindow extends Window {
 				boolean bool = ((Bullet) ele).isDestroy();
 
 				if (bool) {
-					mElementList.remove(ele);
+					removeElement(ele);
 				}
 			}
 
@@ -231,7 +231,7 @@ public class GameWindow extends Window {
 
 						if (bool) {
 							// 移除此炮弹
-							mElementList.remove(ele);
+							removeElement(ele);
 
 							Hitable hitable = (Hitable) element3;
 							Blast blast = hitable.showExplosive(attackable);
@@ -251,7 +251,7 @@ public class GameWindow extends Window {
 					if (blast != null) {
 						addElement(blast);
 					}
-					mElementList.remove(destroyable);
+					this.removeElement(ele);
 				}
 			}
 
@@ -284,6 +284,40 @@ public class GameWindow extends Window {
 				return o1.getOrder() - o2.getOrder();
 			}
 		});
+	}
+
+	
+	@SuppressWarnings("unused")
+	private void removeElement(Element element) {
+		this.mElementList.remove(element);
+		
+		int myTankNum = 0;
+		int enemyTankNum = 0;
+		
+		Iterator<Element> it = mElementList.iterator();
+		while (it.hasNext()) {
+			Element e = (Element)it.next();
+			if (e instanceof MyTank) {
+				myTankNum++;
+			}else if (e instanceof EnemyTank) {
+				enemyTankNum++;
+			}
+		}
+		
+		if (myTankNum == 0) {
+			//敌军获胜
+			Winner winner = new Winner(false,"res\\img\\failed.gif");
+			this.mElementList.clear();
+			this.addElement(winner);
+			
+		}else if (enemyTankNum == 0) {
+			//友军获胜
+			Winner winner = new Winner(true,"res\\img\\win.gif");
+			this.mElementList.clear();
+			this.addElement(winner);
+		}
+		
+		
 	}
 
 }
