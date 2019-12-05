@@ -24,7 +24,7 @@ public abstract class Tank extends Element implements Moveable,Blockable,Hitable
 	protected int power;
 	protected Direction direction = Direction.UP;
 
-	protected int bullettime = 400;
+	protected int bullettime = 1000;
 	protected long lastFire = 0l;
 	protected Direction unmoveDirection;//不可移动的方向
 	

@@ -22,7 +22,13 @@ public class BaseMap2 implements Mapable{
 		{11,1},
 		{12,1},
 		{13,1},
-
+		
+		//Home的保护墙
+		{7+1,9},
+		{7-1,9},
+		{7+1,8},
+		{7-1,8},
+		{7,8},
 	};
 	
 	public static int[][] steels = {
@@ -63,7 +69,6 @@ public class BaseMap2 implements Mapable{
 	
 	public static int[][] grasss = {
 
-
 		{1,7},
 		{2,7},
 		{3,7},
@@ -77,6 +82,14 @@ public class BaseMap2 implements Mapable{
 		{11,7},
 		{12,7},
 		{13,7},
+
+	};
+	
+	
+	//Home对象
+	public static int[][] home = {
+
+		{7,9},
 
 	};
 }

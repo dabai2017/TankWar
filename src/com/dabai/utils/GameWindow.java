@@ -1,17 +1,11 @@
 package com.dabai.utils;
 
-import java.awt.Dialog;
-import java.awt.FlowLayout;
-import java.awt.Frame;
-import java.awt.Label;
 import java.io.IOException;
 import java.util.Comparator;
 
 import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
-
-import javax.swing.JDialog;
 
 import org.lwjgl.input.Keyboard;
 
@@ -48,13 +42,12 @@ public class GameWindow extends Window {
 	@SuppressWarnings("unused")
 	@Override
 	protected void onCreate() {
-		// System.out.println("载入游戏欢迎音乐...");
-		// playSound("res\\snd\\start.wav");
-
+	
 		int[][] walls = BaseMap2.walls;
 		int[][] steels = BaseMap2.steels;
 		int[][] waters = BaseMap2.waters;
 		int[][] grasss = BaseMap2.grasss;
+		int[][] home = BaseMap2.home;
 
 		// 土墙
 		for (int i = 0; i < walls.length; i++) {
@@ -91,17 +84,26 @@ public class GameWindow extends Window {
 			this.addElement(ele);
 		}
 
+		// 老家
+		for (int i = 0; i < home.length; i++) {
+			int x1 = home[i][0];
+			int y1 = home[i][1];
+			Home ele = new Home("res\\img\\symbol.gif", x1 * Config.PX, y1
+					* Config.PX);
+			this.addElement(ele);
+		}
+
 		// 坦克 1号
 		myTank = new MyTank("res\\img\\tank_u.gif", Config.WIDTH / 2
-				- Config.PX / 2 - 80, Config.HEIGHT - Config.PX);
+				- Config.PX/2*5, Config.HEIGHT - Config.PX);
 
 		// 坦克2 号
 		myTank2 = new MyTank("res\\img\\tank_u.gif", Config.WIDTH / 2
-				- Config.PX / 2 + 80, Config.HEIGHT - Config.PX);
+				+ Config.PX/2*3, Config.HEIGHT - Config.PX);
 
 		myTank2.setBullettime(10);
-		myTank2.setSpeed(64);
-		// myTank2.skin(1);
+		//myTank2.setSpeed(64);
+		 myTank2.skin(1);
 
 		this.addElement(myTank);
 		this.addElement(myTank2);
@@ -111,7 +113,7 @@ public class GameWindow extends Window {
 
 		EnemyTank enemyTank2 = new EnemyTank("res\\img\\enemy_1_d.gif",
 				Config.WIDTH - Config.PX, 0);
-		//this.addElement(enemyTank2);
+		this.addElement(enemyTank2);
 
 	}
 
@@ -145,7 +147,7 @@ public class GameWindow extends Window {
 		if (myTank2.getBlood() <= 0) {
 
 			System.out.println("已经死亡  不能发射和移动");
-			
+
 		} else {
 
 			// 上下左右事件( //坦克 2号) 上下左右 回车
@@ -237,6 +239,13 @@ public class GameWindow extends Window {
 							Blast blast = hitable.showExplosive(attackable);
 							addElement(blast);
 
+							if (element3 instanceof Home) {
+								// 敌军获胜
+								Winner winner = new Winner(false, "res\\img\\failed.gif");
+								this.mElementList.clear();
+								this.addElement(winner);
+							}
+							
 							break;
 						}
 					}
@@ -286,38 +295,36 @@ public class GameWindow extends Window {
 		});
 	}
 
-	
 	@SuppressWarnings("unused")
 	private void removeElement(Element element) {
 		this.mElementList.remove(element);
-		
+
 		int myTankNum = 0;
 		int enemyTankNum = 0;
-		
+
 		Iterator<Element> it = mElementList.iterator();
 		while (it.hasNext()) {
-			Element e = (Element)it.next();
+			Element e = (Element) it.next();
 			if (e instanceof MyTank) {
 				myTankNum++;
-			}else if (e instanceof EnemyTank) {
+			} else if (e instanceof EnemyTank) {
 				enemyTankNum++;
 			}
 		}
-		
+
 		if (myTankNum == 0) {
-			//敌军获胜
-			Winner winner = new Winner(false,"res\\img\\failed.gif");
+			// 敌军获胜
+			Winner winner = new Winner(false, "res\\img\\failed.gif");
 			this.mElementList.clear();
 			this.addElement(winner);
-			
-		}else if (enemyTankNum == 0) {
-			//友军获胜
-			Winner winner = new Winner(true,"res\\img\\win.gif");
+
+		} else if (enemyTankNum == 0) {
+			// 友军获胜
+			Winner winner = new Winner(true, "res\\img\\win.gif");
 			this.mElementList.clear();
 			this.addElement(winner);
 		}
-		
-		
+
 	}
 
 }

@@ -35,4 +35,12 @@ public class BaseMap1 implements Mapable{
 		{4,3},
 
 	};
+	
+	
+	//Home对象
+	public static int[][] home = {
+
+		{7,9},
+
+	};
 }

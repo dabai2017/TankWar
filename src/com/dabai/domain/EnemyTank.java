@@ -18,7 +18,7 @@ public class EnemyTank extends Tank{
 
 	public void move() {
 		long nowTime = System.currentTimeMillis();
-		if (nowTime - lastMove < 10) {
+		if (nowTime - lastMove < 400) {
 			return;
 		}
 		lastMove = nowTime;

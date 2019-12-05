@@ -99,10 +99,10 @@ public class MyTank extends Tank {
 
 		switch (i) {
 		case 1:
-			tank_u = img_root + "tank2_u.gif";
-			tank_d = img_root + "tank2_d.gif";
-			tank_l = img_root + "tank2_l.gif";
-			tank_r = img_root + "tank2_r.gif";
+			tank_u = img_root + "tank_2_u.gif";
+			tank_d = img_root + "tank_2_d.gif";
+			tank_l = img_root + "tank_2_l.gif";
+			tank_r = img_root + "tank_2_r.gif";
 			break;
 		case 2:
 
