@@ -4,9 +4,9 @@ import java.io.IOException;
 
 public class PlaySrc {
 
-	
 	/**
 	 * 媒体资源的调用
+	 * 
 	 * @param res
 	 */
 	public static void playSound(String res) {

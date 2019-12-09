@@ -42,7 +42,7 @@ public class GameWindow extends Window {
 	@SuppressWarnings("unused")
 	@Override
 	protected void onCreate() {
-	
+
 		int[][] walls = BaseMap2.walls;
 		int[][] steels = BaseMap2.steels;
 		int[][] waters = BaseMap2.waters;
@@ -95,15 +95,15 @@ public class GameWindow extends Window {
 
 		// 坦克 1号
 		myTank = new MyTank("res\\img\\tank_u.gif", Config.WIDTH / 2
-				- Config.PX/2*5, Config.HEIGHT - Config.PX);
+				- Config.PX / 2 * 5, Config.HEIGHT - Config.PX);
 
 		// 坦克2 号
 		myTank2 = new MyTank("res\\img\\tank_u.gif", Config.WIDTH / 2
-				+ Config.PX/2*3, Config.HEIGHT - Config.PX);
+				+ Config.PX / 2 * 3, Config.HEIGHT - Config.PX);
 
 		myTank2.setBullettime(10);
-		//myTank2.setSpeed(64);
-		 myTank2.skin(1);
+		// myTank2.setSpeed(64);
+		myTank2.skin(1);
 
 		this.addElement(myTank);
 		this.addElement(myTank2);
@@ -241,11 +241,12 @@ public class GameWindow extends Window {
 
 							if (element3 instanceof Home) {
 								// 敌军获胜
-								Winner winner = new Winner(false, "res\\img\\failed.gif");
+								Winner winner = new Winner(false,
+										"res\\img\\failed.gif");
 								this.mElementList.clear();
 								this.addElement(winner);
 							}
-							
+
 							break;
 						}
 					}

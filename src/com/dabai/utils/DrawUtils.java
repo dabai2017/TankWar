@@ -32,7 +32,8 @@ public class DrawUtils {
 
 		if (texture == null) {
 			String format = getFormat(imagePath);
-			texture = TextureLoader.getTexture(format, new FileInputStream(new File(imagePath)));
+			texture = TextureLoader.getTexture(format, new FileInputStream(
+					new File(imagePath)));
 			map.put(key, texture);
 		}
 
@@ -60,7 +61,8 @@ public class DrawUtils {
 
 		if (texture == null) {
 			String format = getFormat(imagePath);
-			texture = TextureLoader.getTexture(format, new FileInputStream(new File(imagePath)));
+			texture = TextureLoader.getTexture(format, new FileInputStream(
+					new File(imagePath)));
 			map.put(key, texture);
 		}
 

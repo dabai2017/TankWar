@@ -12,34 +12,32 @@ import com.dabai.game.Config;
  *
  */
 
-
-
-
-
 /**
  * 砖墙对象
- * @author 故事与猫
- *19-9-19
+ * 
+ * @author 故事与猫 19-9-19
  */
 
-public class Wall extends Element implements Blockable,Hitable,Destroyable{
+public class Wall extends Element implements Blockable, Hitable, Destroyable {
 
-	private int blood;//血量
-	//构造方法：无参,有参
-	public Wall(String imgPath,int x,int y){
+	private int blood;// 血量
+
+	// 构造方法：无参,有参
+	public Wall(String imgPath, int x, int y) {
 		super(imgPath, x, y);
 		this.blood = Config.W_BLOOD;
 	}
-	
+
 	@Override
 	public Blast showDestroy() {
 		// TODO Auto-generated method stub
-		return new Blast(this,true);
+		return new Blast(this, true);
 	}
+
 	@Override
 	public boolean isDestroy() {
 		// TODO Auto-generated method stub
-		return this.blood <= 0 ? true:false;
+		return this.blood <= 0 ? true : false;
 	}
 
 	@Override
@@ -47,7 +45,5 @@ public class Wall extends Element implements Blockable,Hitable,Destroyable{
 		this.blood -= attackable.getPower();
 		return new Blast(this);
 	}
-
-
 
 }

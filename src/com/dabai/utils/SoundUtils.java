@@ -41,7 +41,8 @@ public class SoundUtils {
 		Audio audio = map.get(key);
 		if (audio == null) {
 			String format = getFormat(res);
-			audio = AudioLoader.getAudio(format, ResourceLoader.getResourceAsStream(res));
+			audio = AudioLoader.getAudio(format,
+					ResourceLoader.getResourceAsStream(res));
 			map.put(key, audio);
 		}
 		audio.playAsSoundEffect(1.0f, 1.0f, repeat);

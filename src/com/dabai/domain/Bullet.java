@@ -20,14 +20,12 @@ public class Bullet extends Element implements Attackable, Destroyable {
 	private Direction direction;// 方向
 	private int power;// 取决于坦克
 	private int speed = 10;
-	private Tank tank;//记录此炮弹是谁发射
+	private Tank tank;// 记录此炮弹是谁发射
 
-
-	
 	public Tank getTank() {
 		return this.tank;
 	}
-	
+
 	public void setSpeed(int speed) {
 		this.speed = speed;
 	}
@@ -46,7 +44,7 @@ public class Bullet extends Element implements Attackable, Destroyable {
 		this.imgPath = "res\\img\\bullet_u.gif";
 
 		this.tank = myTank;
-		
+
 		// System.out.println(direction);
 
 		try {
@@ -58,14 +56,13 @@ public class Bullet extends Element implements Attackable, Destroyable {
 			e.printStackTrace();
 		}
 
-
 		switch (direction) {
 		case UP:
-			
+
 			this.x = myTank.x + (myTank.width - this.width) / 2;
 			this.y = myTank.y - this.height / 2;
 			this.imgPath = "res\\img\\bullet_u.gif";
-			
+
 			break;
 		case DOWN:
 

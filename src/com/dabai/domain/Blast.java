@@ -6,7 +6,7 @@ import com.dabai.domain.interfaces.Destroyable;
 import com.dabai.utils.DrawUtils;
 import com.dabai.utils.PlaySrc;
 
-public class Blast extends Element implements Destroyable{
+public class Blast extends Element implements Destroyable {
 
 	boolean isDestroy;
 	int index = 0;

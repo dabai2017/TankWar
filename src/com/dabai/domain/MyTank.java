@@ -16,8 +16,7 @@ public class MyTank extends Tank {
 	public int getBlood() {
 		return blood;
 	}
-	
-	
+
 	public void move(Direction direction) {
 
 		if (!this.direction.equals(direction)) {
